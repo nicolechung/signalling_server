@@ -1,0 +1,24 @@
+FROM node:8.8.1
+
+# Note: whatever you set as your WORKDIR
+# should be the :2nd part of volume setting
+# in docker-compose.yml
+
+# you can also use a folder NOT in Docker
+# by using MKDIR before WORKDIR
+WORKDIR /usr/src/app
+
+# This adds files into your WORKDIR
+# The ./ is the root of your WORKDIR
+# Note: files that are ADDED are not able to be modified afterwards
+# without re-builing
+ADD app/package.json app/package-lock.json ./
+
+# Note: have to add node_modules BACK INTO
+# your volume in docker-compose
+RUN npm install
+
+EXPOSE 8080
+
+# runs what the start script is in package.json
+CMD ["npm", "start"]

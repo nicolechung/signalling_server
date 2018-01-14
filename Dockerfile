@@ -18,7 +18,7 @@ COPY app/package.json app/package-lock.json ./
 # your volume in docker-compose
 RUN npm install
 
-COPY app/server.js ./
+COPY app/ .
 
 EXPOSE 8080
 

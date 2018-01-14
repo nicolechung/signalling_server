@@ -1,4 +1,4 @@
-FROM node:8.8.1
+FROM node:8.8.1 AS build-env
 
 # Note: whatever you set as your WORKDIR
 # should be the :2nd part of volume setting
@@ -17,8 +17,6 @@ COPY app/package.json app/package-lock.json ./
 # Note: have to add node_modules BACK INTO
 # your volume in docker-compose
 RUN npm install
-
-COPY app/server.js ./
 
 EXPOSE 8080
 

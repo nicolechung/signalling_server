@@ -2,17 +2,8 @@ version: '3'
 services:
   node:
     build: '.'
-    volumes:
-      # everything in the non-docker app folder
-      # is available runtime in the WORKDIR /usr/src/app
-      # set up in the Dockerfile
-      - './app:/usr/src/app'
-      # after you do npm install,
-      # make node_modules available as a volume in your workdir
-      # this speeds up build times, in addition to
-      # making sure that node_modules are not hidden by your volume
-      - '/usr/src/app/node_modules'
+    # VOLUMES ARE NOT AVAILABLE IN HEROKU
     environment:
       - NODE_ENV=development
     ports:
-      - '8080:8080'
+      - '5432:5432'

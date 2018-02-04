@@ -1,4 +1,4 @@
-FROM node:8.8.1
+FROM node:8.8.1 AS build-env
 
 # Note: whatever you set as your WORKDIR
 # should be the :2nd part of volume setting
@@ -11,16 +11,18 @@ WORKDIR /usr/src/app
 # This adds files into your WORKDIR
 # The ./ is the root of your WORKDIR
 # Note: files that are ADDED are not able to be modified afterwards
-# without re-builing
+# without re-building
 COPY app/package.json app/package-lock.json ./
 
-# Note: have to add node_modules BACK INTO
-# your volume in docker-compose
+# no volumes on this version, copy the app files over to
+# your WORKDIR
+COPY app/server.js app/http-server.js ./
+
 RUN npm install
+RUN npm install nodemon -g
 
-COPY app/ .
-
-EXPOSE 8080
+# https
+EXPOSE 443
 
 # runs what the start script is in package.json
-CMD ["npm", "start"]
+CMD ["nodemon", "server.js"]
